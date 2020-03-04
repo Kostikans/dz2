@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(dzz1 C)
+project(dz2 C)
 enable_language(C CXX ASM)
 set(CMAKE_C_FLAGS  "-std=c11")
 
@@ -22,4 +22,4 @@ file(GLOB sources
         "${PROJECT_SOURCE_DIR}/include/*.h"
         "${PROJECT_SOURCE_DIR}/src/*.c")
 
-add_executable(dzz1 ${sources})
+add_executable(dz2 ${sources})
