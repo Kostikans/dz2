@@ -1,6 +1,6 @@
 #include "crawl.h"
 
 int main(){
-    printf("%d",4);
+    crawl("kokekrewrkwel","/home/kostikan/testDz1");
     return 0;
 };
