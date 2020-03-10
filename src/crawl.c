@@ -1,20 +1,32 @@
 #include "crawl.h"
 #include "dirent.h"
 
-size_t fileRequest(char *pattern, char *path,char *top)
+#define THREADS_COUNT 4
+
+size_t threadsRun(pthread_t **threads,int pullSize)
+{
+    for(size_t i = 0; i < pullSize; ++i)
+    {
+        pthread_join(*threads[i],NULL);
+    }
+}
+
+void* fileRequest(RequestData *data)
 {
     FILE * file;
-    if((file = fopen(path,"r")) == NULL) {
+    if((file = fopen(data->path,"r")) == NULL) {
         printf("Failed to open file. path:");
-        printf("%s",path);
+        printf("%s",data->path);
         return 0;
     }
-    size_t patternLen = strlen(pattern);
+    size_t patternLen = strlen(data->pattern);
     const size_t bufSize = 1024 * 1024;
     char buffer[bufSize];
     fgets(buffer,bufSize,file);
 
     int *levDist = (int*)calloc(sizeof(int),patternLen + 1);
+    if(levDist == NULL)
+        return NULL;
     levDist[0] = 0;
     int insertCost = 1;
     int deleteCost = 1;
@@ -27,10 +39,10 @@ size_t fileRequest(char *pattern, char *path,char *top)
         int previousDiagSave;
         levDist[0] += insertCost;
         for(size_t i = 1; i <= patternLen;++i){
-            if(buffer[j-1] == '\n' || pattern[i-1] == '\n')
+            if(buffer[j-1] == '\n' || data->pattern[i-1] == '\n')
                 continue;
             previousDiagSave = levDist[i];
-            if(pattern[i-1] == buffer[j-1]){
+            if(data->pattern[i-1] == buffer[j-1]){
                 levDist[i] = previousDiag;
             }
             else{
@@ -42,29 +54,89 @@ size_t fileRequest(char *pattern, char *path,char *top)
         if(buffer[j] == '\0')
             break;
     }
-    for(int i = 0; i <= patternLen; ++i)
-    {
-        printf("%d ",levDist[i]);
-    }
-    //printf("%d",levDist[patternLen]);
-    printf("%s","  ");
-    printf("%s",buffer);
-    printf("%c",'\n');
+    printf("%d%s%s%c",levDist[patternLen],"  ",buffer,'\n');
+    free(levDist);
     fclose(file);
 }
-char* crawl(char* pattern,char *path)
+char* sequentialCrawl(char* pattern,char *path)
 {
     DIR *mydir = opendir(path);
     char top[5];
+
     if(mydir == NULL) {
         return 0;
     }
     struct dirent *entry;
     while(entry = readdir(mydir)) {
         char* name = entry->d_name;
-        if(strcmp(name,".") && strcmp(name,"..")) {
+        if(strcmp(name,".") != 0 && strcmp(name,"..") != 0) {
             char* filePath = cat(path,name);
-            fileRequest(pattern, filePath,top);
+            RequestData data;
+            data.pattern = pattern;
+            data.path = filePath;
+            data.top = top;
+            fileRequest(&data);
+            free(filePath);
+        }
+        else
+            continue;
+    }
+    free(mydir);
+}
+char* parallelCrawl(char* pattern,char *path){
+    DIR *mydir = opendir(path);
+    char top[5];
+    if(mydir == NULL) {
+        return 0;
+    }
+    pthread_t *pthread[THREADS_COUNT];
+    for(int i = 0; i < 4; ++i)
+        pthread[i] = NULL;
+    RequestData *data[THREADS_COUNT];
+    struct dirent *entry;
+    int ThreadCount = 0;
+    entry = readdir(mydir);
+    while(entry) {
+        entry = readdir(mydir);
+        if(!entry){
+            for(int i = 0; i < ThreadCount;++i){
+                pthread_create(pthread[i], NULL, (void *)fileRequest, data[i]);
+            }
+            threadsRun(pthread,ThreadCount);
+            for(int i = 0; i < ThreadCount;++i){
+                free(pthread[i]);
+                freeRequestData(data[i]);
+            }
+            break;
+        }
+        char* name = entry->d_name;
+        if(strcmp(name,".") != 0 && strcmp(name,"..") != 0) {
+            char* filePath = cat(path,name);
+            data[ThreadCount] = (RequestData*)malloc(sizeof(RequestData));
+            data[ThreadCount]->path = (char*)calloc(sizeof(char),strlen(filePath) + 1);
+            if(data[ThreadCount]->path == NULL)
+                return NULL;
+            if(!memcpy(data[ThreadCount]->path,filePath,strlen(filePath) * sizeof(char)))
+                return NULL;
+            data[ThreadCount]->pattern = pattern;
+            data[ThreadCount]->top = top;
+
+            pthread[ThreadCount] = (pthread_t*) malloc(sizeof(pthread_t));
+            if(pthread[ThreadCount] == NULL)
+                return NULL;
+            ++ThreadCount;
+            if(ThreadCount == THREADS_COUNT)
+            {
+                for(int i = 0; i < ThreadCount;++i){
+                    pthread_create(pthread[i], NULL, (void *)fileRequest, data[i]);
+                }
+                threadsRun(pthread,ThreadCount);
+                for(int i = 0; i < ThreadCount;++i){
+                    free(pthread[i]);
+                    freeRequestData(data[i]);
+                }
+                ThreadCount = 0;
+            }
             free(filePath);
         }
         else
@@ -93,4 +165,8 @@ int min(const int a1, const int a2){
         return a1;
     else
         return a2;
+}
+void* freeRequestData(RequestData *data){
+    free(data->path);
+    free(data);
 }
