@@ -14,16 +14,16 @@ typedef struct Top{
 typedef struct RequestData
 {
     char *name;
-    char *pattern;
-    char *path;
+    const char *pattern;
+    const char *path;
     int levDist;
 } RequestData;
 
 void* fileRequest(RequestData *data);
-char* sequentialCrawl(char* pattern,char *path);
-char* parallelCrawl(char* pattern,char *path);
+void* sequentialCrawl(const char* pattern,const char *path,Top **top);
+void* parallelCrawl(const char* pattern,const char *path,Top **top);
 char* cat(char *s1, char *s2);
 int min(int a1, int a2);
 size_t threadsRun(pthread_t **threads,int pullSize);
 void* freeRequestData(RequestData *data);
-void* createTop(RequestData *data,int count);
+void* createTop(RequestData *data,int count,Top **top);

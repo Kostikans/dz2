@@ -64,7 +64,7 @@ void* fileRequest(RequestData *data)
     data->levDist = levDist[patternLen];
     free(levDist);
 }
-char* sequentialCrawl(char* pattern,char *path)
+void* sequentialCrawl(const char* pattern,const char *path,Top **top)
 {
     DIR *mydir = opendir(path);
     if(mydir == NULL) {
@@ -76,7 +76,7 @@ char* sequentialCrawl(char* pattern,char *path)
     while(entry = readdir(mydir)) {
         char* name = entry->d_name;
         if(strcmp(name,".") != 0 && strcmp(name,"..") != 0) {
-            char* filePath = cat(path,name);
+            char* filePath = cat((char*)path,name);
             data[count].name = name;
             data[count].pattern = pattern;
             data[count].path = filePath;
@@ -84,15 +84,13 @@ char* sequentialCrawl(char* pattern,char *path)
             ++count;
             free(filePath);
         }
-        else
-            continue;
     }
-    createTop(data,count);
+    createTop(data,count,top);
     free(data);
     free(mydir);
 }
 
-char* parallelCrawl(char* pattern,char *path){
+void* parallelCrawl(const char* pattern,const char *path,Top **top){
     DIR *mydir = opendir(path);
     if(mydir == NULL) {
         return 0;
@@ -116,20 +114,20 @@ char* parallelCrawl(char* pattern,char *path){
             threadsRun(pthread,ThreadCount);
             for(int i = 0; i < ThreadCount;++i){
                 free(pthread[i]);
-                free(data[temp + i].path);
+                free((char*)data[temp + i].path);
             }
             break;
         }
         char* name = entry->d_name;
         if(strcmp(name,".") != 0 && strcmp(name,"..") != 0) {
 
-            char* filePath = cat(path,name);
+            char* filePath = cat((char*)path,name);
             data[count].name = name;
             data[count].pattern = pattern;
             data[count].path = (char*)calloc(sizeof(char),strlen(filePath) + 1);
             if(data[count].path == NULL)
                 return NULL;
-            if(!memcpy(data[count].path,filePath,strlen(filePath) * sizeof(char)))
+            if(!memcpy((char*)data[count].path,filePath,strlen(filePath) * sizeof(char)))
                 return NULL;
 
             pthread[ThreadCount] = (pthread_t*) malloc(sizeof(pthread_t));
@@ -144,17 +142,15 @@ char* parallelCrawl(char* pattern,char *path){
                 threadsRun(pthread,ThreadCount);
                 for(int i = 0; i < ThreadCount;++i){
                     free(pthread[i]);
-                    free(data[count - i].path);
+                    free((char*)data[count - i].path);
                 }
                 ThreadCount = 0;
             }
             count++;
             free(filePath);
         }
-        else
-            continue;
     }
-    createTop(data,count);
+    createTop(data,count,top);
     free(data);
     free(mydir);
 }
@@ -181,14 +177,14 @@ int min(const int a1, const int a2){
         return a2;
 }
 void* freeRequestData(RequestData *data){
-    free(data->path);
+    free((char*)data->path);
     free(data);
 }
 
-void* createTop(RequestData *data,int count){
-    Top top[5];
+void* createTop(RequestData *data,int count,Top **top){
+    *top = (Top*)malloc(5 * sizeof(Top));
     for(int i = 0; i < 5; ++i){
-        top[i].levDistValue = INT_MAX;
+        (*top)[i].levDistValue = INT_MAX;
     }
 
     int min = INT_MAX;
@@ -203,10 +199,10 @@ void* createTop(RequestData *data,int count){
         }
         currentMin = min;
         min = INT_MAX;
-        top[i].fileName = data[pos].name;
-        top[i].levDistValue = data[pos].levDist;
+        (*top)[i].fileName = data[pos].name;
+        (*top)[i].levDistValue = data[pos].levDist;
     }
     for(int i = 0; i < 5; ++i){
-        printf("%d %s%c",top[i].levDistValue,top[i].fileName,'\n');
+        printf("%d %s%c",(*top)[i].levDistValue,(*top)[i].fileName,'\n');
     }
 }

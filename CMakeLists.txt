@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.1)
 project(dz2 C)
 enable_language(C CXX ASM)
 set(CMAKE_C_FLAGS  "-std=c11")
@@ -12,7 +12,6 @@ execute_process(COMMAND ${CMAKE_COMMAND} --build .
 
 add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
         ${CMAKE_BINARY_DIR}/googletest-build)
-
 
 
 enable_testing()
