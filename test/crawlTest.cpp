@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
 
 extern "C" {
-    #include "crawlSequintally.h"
-#include "crawlParallel.h"
+    #include "../include/crawlSequintally.h"
+#include "../include/crawlParallel.h"
 }
 
 TEST(case1,test1){
