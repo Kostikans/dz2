@@ -10,7 +10,7 @@ int main(){
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
     printf("%f\n",time_spent);
 
-    Top *top2 = NULL;
+    TopPrl *top2 = NULL;
     begin = clock();
     CrawlPrl("kokekrewrkwel","/home/kostikan/testDz1",&top2);
     end = clock();

@@ -20,10 +20,10 @@ typedef struct RequestDataPrl
     int levDist;
 } RequestDataPrl;
 
-void* fileRequestPrl(RequestDataPrl *data);
-void* CrawlPrl(const char* pattern,const char *path,TopPrl **top);
+int fileRequestPrl(RequestDataPrl *data);
+int CrawlPrl(const char* pattern,const char *path,TopPrl **top);
 char* catPrl(char *s1, char *s2);
 int minPrl(int a1, int a2);
-size_t threadsRunPrl(pthread_t **threads,int pullSize);
-void* freeRequestDataPrl(RequestDataPrl *data);
-void* createTopPrl(RequestDataPrl *data,int count,TopPrl **top);
+void threadsRunPrl(pthread_t **threads,int pullSize);
+int freeRequestDataPrl(RequestDataPrl *data);
+int createTopPrl(RequestDataPrl *data,int count,TopPrl **top);

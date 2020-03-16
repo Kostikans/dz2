@@ -2,18 +2,10 @@
 #include "dirent.h"
 #include "limits.h"
 
-#define THREADS_COUNT 4
 #define FILES_COUNT 500
 
-size_t threadsRun(pthread_t **threads,int pullSize)
-{
-    for(size_t i = 0; i < pullSize; ++i)
-    {
-        pthread_join(*threads[i],NULL);
-    }
-}
 
-void* fileRequest(RequestData *data)
+int fileRequest(RequestData *data)
 {
     FILE * file;
     if((file = fopen(data->path,"r")) == NULL) {
@@ -33,7 +25,7 @@ void* fileRequest(RequestData *data)
 
     int *levDist = (int*)calloc(sizeof(int),patternLen + 1);
     if(levDist == NULL)
-        return NULL;
+        return 0;
     levDist[0] = 0;
     int insertCost = 1;
     int deleteCost = 1;
@@ -63,8 +55,9 @@ void* fileRequest(RequestData *data)
     }
     data->levDist = levDist[patternLen];
     free(levDist);
+    return 1;
 }
-void* Crawl(const char* pattern,const char *path,Top **top)
+int Crawl(const char* pattern,const char *path,Top **top)
 {
     DIR *mydir = opendir(path);
     if(mydir == NULL) {
@@ -73,7 +66,11 @@ void* Crawl(const char* pattern,const char *path,Top **top)
     RequestData *data = (RequestData*)malloc(FILES_COUNT * sizeof(RequestData));
     int count = 0;
     struct dirent *entry;
-    while(entry = readdir(mydir)) {
+    entry = readdir(mydir);
+    while(entry) {
+        entry = readdir(mydir);
+        if(!entry)
+            break;
         char* name = entry->d_name;
         if(strcmp(name,".") != 0 && strcmp(name,"..") != 0) {
             char* filePath = cat((char*)path,name);
@@ -88,6 +85,7 @@ void* Crawl(const char* pattern,const char *path,Top **top)
     createTop(data,count,top);
     free(data);
     free(mydir);
+    return 1;
 }
 
 char* cat(char *s1, char *s2) {
@@ -112,12 +110,13 @@ int min(const int a1, const int a2){
     else
         return a2;
 }
-void* freeRequestData(RequestData *data){
+int freeRequestData(RequestData *data){
     free((char*)data->path);
     free(data);
+    return 1;
 }
 
-void* createTop(RequestData *data,int count,Top **top){
+int createTop(RequestData *data,int count,Top **top){
     *top = (Top*)malloc(5 * sizeof(Top));
     for(int i = 0; i < 5; ++i){
         (*top)[i].levDistValue = INT_MAX;
@@ -141,4 +140,5 @@ void* createTop(RequestData *data,int count,Top **top){
     for(int i = 0; i < 5; ++i){
         printf("%d %s%c",(*top)[i].levDistValue,(*top)[i].fileName,'\n');
     }
+    return 1;
 }

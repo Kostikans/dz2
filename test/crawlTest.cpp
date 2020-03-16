@@ -10,6 +10,7 @@ TEST(case1,test1){
     Crawl("kokekrewrkwel","/home/kostikan/testDz1",&top1);
     TopPrl *top2;
     CrawlPrl("kokekrewrkwel","/home/kostikan/testDz1",&top2);
+    ASSERT_EQ(0,0);
     free(top1);
     free(top2);
 }

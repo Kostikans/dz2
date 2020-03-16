@@ -4,7 +4,7 @@
 
 #define FILES_COUNT 500
 
-size_t threadsRunPrl(pthread_t **threads,int pullSize)
+void threadsRunPrl(pthread_t **threads,int pullSize)
 {
     for(size_t i = 0; i < pullSize; ++i)
     {
@@ -12,7 +12,7 @@ size_t threadsRunPrl(pthread_t **threads,int pullSize)
     }
 }
 
-void* fileRequestPrl(RequestDataPrl *data)
+int fileRequestPrl(RequestDataPrl *data)
 {
     FILE * file;
     if((file = fopen(data->path,"r")) == NULL) {
@@ -32,7 +32,7 @@ void* fileRequestPrl(RequestDataPrl *data)
 
     int *levDist = (int*)calloc(sizeof(int),patternLen + 1);
     if(levDist == NULL)
-        return NULL;
+        return 0;
     levDist[0] = 0;
     int insertCost = 1;
     int deleteCost = 1;
@@ -64,7 +64,7 @@ void* fileRequestPrl(RequestDataPrl *data)
     free(levDist);
 }
 
-void* CrawlPrl(const char* pattern,const char *path,TopPrl **top){
+int CrawlPrl(const char* pattern,const char *path,TopPrl **top){
     int ThreadsCount = get_nprocs();
     DIR *mydir = opendir(path);
     if(mydir == NULL) {
@@ -101,13 +101,13 @@ void* CrawlPrl(const char* pattern,const char *path,TopPrl **top){
             data[count].pattern = pattern;
             data[count].path = (char*)calloc(sizeof(char),strlen(filePath) + 1);
             if(data[count].path == NULL)
-                return NULL;
+                return 0;
             if(!memcpy((char*)data[count].path,filePath,strlen(filePath) * sizeof(char)))
-                return NULL;
+                return 0;
 
             pthread[ThreadCount] = (pthread_t*) malloc(sizeof(pthread_t));
             if(pthread[ThreadCount] == NULL)
-                return NULL;
+                return 0;
             ++ThreadCount;
             if(ThreadCount == ThreadsCount)
             {
@@ -128,6 +128,7 @@ void* CrawlPrl(const char* pattern,const char *path,TopPrl **top){
     createTopPrl(data,count,top);
     free(data);
     free(mydir);
+    return 1;
 }
 char* catPrl(char *s1, char *s2) {
     if(s1 == NULL || s2 == NULL)
@@ -151,12 +152,13 @@ int minPrl(const int a1, const int a2){
     else
         return a2;
 }
-void* freeRequestDataPrl(RequestDataPrl *data){
+int freeRequestDataPrl(RequestDataPrl *data){
     free((char*)data->path);
     free(data);
+    return 1;
 }
 
-void* createTopPrl(RequestDataPrl *data,int count,TopPrl **top){
+int createTopPrl(RequestDataPrl *data,int count,TopPrl **top){
     *top = (TopPrl*)malloc(5 * sizeof(TopPrl));
     for(int i = 0; i < 5; ++i){
         (*top)[i].levDistValue = INT_MAX;
@@ -180,4 +182,5 @@ void* createTopPrl(RequestDataPrl *data,int count,TopPrl **top){
     for(int i = 0; i < 5; ++i){
         printf("%d %s%c",(*top)[i].levDistValue,(*top)[i].fileName,'\n');
     }
+    return 1;
 }

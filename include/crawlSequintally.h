@@ -19,10 +19,9 @@ typedef struct RequestData
     int levDist;
 } RequestData;
 
-void* fileRequest(RequestData *data);
-void* Crawl(const char* pattern,const char *path,Top **top);
+int fileRequest(RequestData *data);
+int Crawl(const char* pattern,const char *path,Top **top);
 char* cat(char *s1, char *s2);
 int min(int a1, int a2);
-size_t threadsRun(pthread_t **threads,int pullSize);
-void* freeRequestData(RequestData *data);
-void* createTop(RequestData *data,int count,Top **top);
+int freeRequestData(RequestData *data);
+int createTop(RequestData *data,int count,Top **top);
