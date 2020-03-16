@@ -20,8 +20,7 @@ typedef struct RequestData
 } RequestData;
 
 void* fileRequest(RequestData *data);
-void* sequentialCrawl(const char* pattern,const char *path,Top **top);
-void* parallelCrawl(const char* pattern,const char *path,Top **top);
+void* Crawl(const char* pattern,const char *path,Top **top);
 char* cat(char *s1, char *s2);
 int min(int a1, int a2);
 size_t threadsRun(pthread_t **threads,int pullSize);

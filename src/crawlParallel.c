@@ -1,11 +1,10 @@
-#include "crawl.h"
+#include "crawlParallel.h"
 #include "dirent.h"
 #include "limits.h"
 
-#define THREADS_COUNT 4
 #define FILES_COUNT 500
 
-size_t threadsRun(pthread_t **threads,int pullSize)
+size_t threadsRunPrl(pthread_t **threads,int pullSize)
 {
     for(size_t i = 0; i < pullSize; ++i)
     {
@@ -13,7 +12,7 @@ size_t threadsRun(pthread_t **threads,int pullSize)
     }
 }
 
-void* fileRequest(RequestData *data)
+void* fileRequestPrl(RequestDataPrl *data)
 {
     FILE * file;
     if((file = fopen(data->path,"r")) == NULL) {
@@ -53,8 +52,8 @@ void* fileRequest(RequestData *data)
                 levDist[i] = previousDiag;
             }
             else{
-                levDist[i] = min(min(levDist[i-1] + deleteCost, levDist[i] + insertCost),
-                        previousDiag + replaceCost);
+                levDist[i] = minPrl(minPrl(levDist[i-1] + deleteCost, levDist[i] + insertCost),
+                                 previousDiag + replaceCost);
             }
             previousDiag = previousDiagSave;
         }
@@ -64,43 +63,19 @@ void* fileRequest(RequestData *data)
     data->levDist = levDist[patternLen];
     free(levDist);
 }
-void* sequentialCrawl(const char* pattern,const char *path,Top **top)
-{
-    DIR *mydir = opendir(path);
-    if(mydir == NULL) {
-        return 0;
-    }
-    RequestData *data = (RequestData*)malloc(FILES_COUNT * sizeof(RequestData));
-    int count = 0;
-    struct dirent *entry;
-    while(entry = readdir(mydir)) {
-        char* name = entry->d_name;
-        if(strcmp(name,".") != 0 && strcmp(name,"..") != 0) {
-            char* filePath = cat((char*)path,name);
-            data[count].name = name;
-            data[count].pattern = pattern;
-            data[count].path = filePath;
-            fileRequest(&data[count]);
-            ++count;
-            free(filePath);
-        }
-    }
-    createTop(data,count,top);
-    free(data);
-    free(mydir);
-}
 
-void* parallelCrawl(const char* pattern,const char *path,Top **top){
+void* CrawlPrl(const char* pattern,const char *path,TopPrl **top){
+    int ThreadsCount = get_nprocs();
     DIR *mydir = opendir(path);
     if(mydir == NULL) {
         return 0;
     }
     int count = 0;
 
-    pthread_t *pthread[THREADS_COUNT];
-    for(int i = 0; i < THREADS_COUNT; ++i)
+    pthread_t *pthread[ThreadsCount];
+    for(int i = 0; i < ThreadsCount; ++i)
         pthread[i] = NULL;
-    RequestData *data = (RequestData*)malloc(FILES_COUNT * sizeof(RequestData));
+    RequestDataPrl *data = (RequestDataPrl*)malloc(FILES_COUNT * sizeof(RequestDataPrl));
     struct dirent *entry;
     int ThreadCount = 0;
     entry = readdir(mydir);
@@ -109,9 +84,9 @@ void* parallelCrawl(const char* pattern,const char *path,Top **top){
         if(!entry){
             int temp = count - ThreadCount;
             for(int i = 0; i < ThreadCount;++i){
-                pthread_create(pthread[i], NULL, (void *)fileRequest, &data[temp + i]);
+                pthread_create(pthread[i], NULL, (void *)fileRequestPrl, &data[temp + i]);
             }
-            threadsRun(pthread,ThreadCount);
+            threadsRunPrl(pthread,ThreadCount);
             for(int i = 0; i < ThreadCount;++i){
                 free(pthread[i]);
                 free((char*)data[temp + i].path);
@@ -121,7 +96,7 @@ void* parallelCrawl(const char* pattern,const char *path,Top **top){
         char* name = entry->d_name;
         if(strcmp(name,".") != 0 && strcmp(name,"..") != 0) {
 
-            char* filePath = cat((char*)path,name);
+            char* filePath = catPrl((char*)path,name);
             data[count].name = name;
             data[count].pattern = pattern;
             data[count].path = (char*)calloc(sizeof(char),strlen(filePath) + 1);
@@ -134,12 +109,12 @@ void* parallelCrawl(const char* pattern,const char *path,Top **top){
             if(pthread[ThreadCount] == NULL)
                 return NULL;
             ++ThreadCount;
-            if(ThreadCount == THREADS_COUNT)
+            if(ThreadCount == ThreadsCount)
             {
                 for(int i = 0; i < ThreadCount;++i){
-                    pthread_create(pthread[i], NULL, (void *)fileRequest, &data[count - i]);
+                    pthread_create(pthread[i], NULL, (void *)fileRequestPrl, &data[count - i]);
                 }
-                threadsRun(pthread,ThreadCount);
+                threadsRunPrl(pthread,ThreadCount);
                 for(int i = 0; i < ThreadCount;++i){
                     free(pthread[i]);
                     free((char*)data[count - i].path);
@@ -150,11 +125,11 @@ void* parallelCrawl(const char* pattern,const char *path,Top **top){
             free(filePath);
         }
     }
-    createTop(data,count,top);
+    createTopPrl(data,count,top);
     free(data);
     free(mydir);
 }
-char* cat(char *s1, char *s2) {
+char* catPrl(char *s1, char *s2) {
     if(s1 == NULL || s2 == NULL)
         return 0;
     size_t len1 = strlen(s1);
@@ -170,19 +145,19 @@ char* cat(char *s1, char *s2) {
     return result;
 }
 
-int min(const int a1, const int a2){
+int minPrl(const int a1, const int a2){
     if(a1 <= a2)
         return a1;
     else
         return a2;
 }
-void* freeRequestData(RequestData *data){
+void* freeRequestDataPrl(RequestDataPrl *data){
     free((char*)data->path);
     free(data);
 }
 
-void* createTop(RequestData *data,int count,Top **top){
-    *top = (Top*)malloc(5 * sizeof(Top));
+void* createTopPrl(RequestDataPrl *data,int count,TopPrl **top){
+    *top = (TopPrl*)malloc(5 * sizeof(TopPrl));
     for(int i = 0; i < 5; ++i){
         (*top)[i].levDistValue = INT_MAX;
     }
