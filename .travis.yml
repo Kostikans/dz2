@@ -47,9 +47,9 @@ script:
   - gcc -o dz2 *.o -fprofile-arcs -ftest-coverage -g -L. -lcrawlSequintally -lcrawlParallel -Wl,-rpath,.
   - mkdir build
   - cd build
-  - cmake ..
-  - cmake —build .
+  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
+  - cmake --build .
   - ctest --output-on-failure
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind ./dz2 ; fi
   - cd ..
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck —enable=warning,performance,information ./src ./test ./include/*.h ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck --enable=warning,performance,information ./src ./test ./include/*.h; fi
