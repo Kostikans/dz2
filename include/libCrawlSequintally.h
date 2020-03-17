@@ -7,7 +7,7 @@
 #include <pthread.h>
 
 typedef struct Top{
-    char *fileName;
+    char fileName[50];
     int levDistValue;
 }Top;
 
@@ -25,3 +25,4 @@ char* cat(char *s1, char *s2);
 int min(int a1, int a2);
 int freeRequestData(RequestData *data);
 int createTop(RequestData *data,int count,Top **top);
+int initTop(Top *top);

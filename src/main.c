@@ -7,6 +7,7 @@
 void addFileName(char *path,int len, char *name){
     memcpy((void*)(path + len), name, len + strlen(name) + 1);
 }
+
 void test(char *path){
     Top *top1 = NULL;
     Crawl("kokekrewrkwel",path,&top1);

@@ -8,7 +8,7 @@
 #include <sys/sysinfo.h>
 
 typedef struct TopPrl{
-    char *fileName;
+    char fileName[50];
     int levDistValue;
 }TopPrl;
 
@@ -27,3 +27,4 @@ int minPrl(int a1, int a2);
 void threadsRunPrl(pthread_t **threads,int pullSize);
 int freeRequestDataPrl(RequestDataPrl *data);
 int createTopPrl(RequestDataPrl *data,int count,TopPrl **top);
+int initTopPrl(TopPrl *top);

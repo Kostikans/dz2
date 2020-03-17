@@ -160,10 +160,18 @@ int freeRequestDataPrl(RequestDataPrl *data){
     return 1;
 }
 
+int initTopPrl(TopPrl *top){
+    top->levDistValue = INT_MAX;
+    for(int i = 0; i < 50;++i)
+    {
+        top->fileName[i] = '0';
+    }
+}
+
 int createTopPrl(RequestDataPrl *data,int count,TopPrl **top){
     *top = (TopPrl*)malloc(5 * sizeof(TopPrl));
     for(int i = 0; i < 5; ++i){
-        (*top)[i].levDistValue = INT_MAX;
+        initTopPrl(&(*top)[i]);
     }
 
     int min = INT_MAX;
@@ -178,7 +186,11 @@ int createTopPrl(RequestDataPrl *data,int count,TopPrl **top){
         }
         currentMin = min;
         min = INT_MAX;
-        (*top)[i].fileName = data[pos].name;
+        int j = 0;
+        for(j = 0; j < strlen(data[pos].name); ++j){
+            (*top)[i].fileName[j] = data[pos].name[j];
+        }
+        (*top)[i].fileName[j] = '\0';
         (*top)[i].levDistValue = data[pos].levDist;
     }
     for(int i = 0; i < 5; ++i){
@@ -186,3 +198,4 @@ int createTopPrl(RequestDataPrl *data,int count,TopPrl **top){
     }
     return 1;
 }
+
