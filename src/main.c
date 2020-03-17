@@ -6,7 +6,7 @@
 
 int main(){
     mkdir("/home/kostikan/CLionProject/dz2/files", (__mode_t) NULL);
-    FILE *mf = fopen("/home/kostikan/CLionProjects/dz2/files/1.txt","w+");
+    FILE *mf = fopen("/home/kostikan/CLionProjects/dz2/files/1.txt","w");
     const char* s1 = "kostyarwerwekekewrwejklfjklsdjklfjdsmvnkltwejklnvdmsjrkqejfsd,jekljds,mklwrjkldf,gjwrekljmfdm";
     fprintf(mf,"%s", s1);
     fclose(mf);
