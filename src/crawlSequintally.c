@@ -61,6 +61,7 @@ int Crawl(const char* pattern,const char *path,Top **top)
 {
     DIR *mydir = opendir(path);
     if(mydir == NULL) {
+        free(mydir);
         return 0;
     }
     RequestData *data = (RequestData*)malloc(FILES_COUNT * sizeof(RequestData));
