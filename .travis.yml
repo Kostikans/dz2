@@ -5,6 +5,7 @@ language: c
 
 os:
   - linux
+  - osx
 
 compiler:
   - gcc
@@ -46,14 +47,10 @@ script:
   - gcc -shared -o crawlParallel.so crawlParallel.o
   - gcc -std=c11 -Wall -Wpedantic —coverage -c *.c
   - gcc -o dz2 *.o -fprofile-arcs -ftest-coverage -g -L. -ldynamic -lstatic -Wl,-rpath,.
-  - ./dz2
-  - gcov *.c
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then lcov -t "coverage" -o coverage.info -c -d . ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then genhtml -o report coverage.info ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind —show-leak-kinds=all ./dz2 ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck —enable=warning,performance,information,style *.c *.h ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cpplint —filter=-readability,-build *.c ; fi
   - mkdir build
   - cd build
   - cmake ..
   - cmake —build .
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind —show-leak-kinds=all ./dz2 ; fi
+  - cd ..
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck —enable=warning,performance,information,style *.c *.h ; fi
