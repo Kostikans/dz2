@@ -84,7 +84,7 @@ int CrawlPrl(const char* pattern,const char *path,TopPrl **top){
         if(!entry){
             int temp = count - ThreadCount;
             for(int i = 0; i < ThreadCount;++i){
-                pthread_create(pthread[i], NULL, (void *)fileRequestPrl, &data[temp + i]);
+                pthread_create(pthread[i], NULL, (void *(*)(void *)) fileRequestPrl, &data[temp + i]);
             }
             threadsRunPrl(pthread,ThreadCount);
             for(int i = 0; i < ThreadCount;++i){
@@ -112,7 +112,7 @@ int CrawlPrl(const char* pattern,const char *path,TopPrl **top){
             if(ThreadCount == ThreadsCount)
             {
                 for(int i = 0; i < ThreadCount;++i){
-                    pthread_create(pthread[i], NULL, (void *)fileRequestPrl, &data[count - i]);
+                    pthread_create(pthread[i], NULL, (void *(*)(void *))fileRequestPrl, &data[count - i]);
                 }
                 threadsRunPrl(pthread,ThreadCount);
                 for(int i = 0; i < ThreadCount;++i){
