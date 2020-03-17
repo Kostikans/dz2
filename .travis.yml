@@ -17,6 +17,7 @@ addons:
     - cppcheck
     - make
     - cmake
+    - pthread
 
 
 env:
