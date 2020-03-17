@@ -83,6 +83,7 @@ int main(){
     Top *top1 = NULL;
     clock_t begin = clock();
 
+    free(path);
     path = get_current_dir_name();
 
     len = (int)strlen(path);
