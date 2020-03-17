@@ -58,7 +58,7 @@ TEST(case5,test5){
 TEST(case6,test6){
     Top *top1;
     Crawl("kokekrewrkwel","/home/kostikan/CLionProjects/dz2/files",&top1);
-    const char * t = "8.txt";
+    const char * t = "2.txt";
     ASSERT_EQ(*top1[3].fileName, *t);
     free(top1);
 }
@@ -75,7 +75,7 @@ TEST(case8,test8){
     TopPrl *top2;
     CrawlPrl("kokekrewrkwel","/home/kostikan/CLionProjects/dz2/files",&top2);
     const char *t = "2.txt";
-    ASSERT_EQ(*top2[2].fileName, *t);
+    ASSERT_EQ(*top2[3].fileName, *t);
     free(top2);
 }
 
@@ -90,7 +90,7 @@ TEST(case9,test9){
 TEST(case10,test10){
     TopPrl *top2;
     CrawlPrl("kokekrewrkwel","/home/kostikan/CLionProjects/dz2/files",&top2);
-    const char *t = "9.txt";
+    const char *t = "3.txt";
     ASSERT_EQ( *top2[4].fileName, *t);
     free(top2);
 }
