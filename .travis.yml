@@ -17,8 +17,6 @@ addons:
     - cppcheck
     - make
     - cmake
-    - pthread
-
 
 env:
   # список переменных окружения, влияющих на матрицу сборки:
