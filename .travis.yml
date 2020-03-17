@@ -44,7 +44,7 @@ script:
   - ar r libCrawlSequintally.a libCrawlSequintally.o
   - gcc -std=c11 -Wall -Wpedantic -c -fPIC ./src/libCrawlParallel.c
   - gcc -shared -o libCrawlParallel.so libCrawlParallel.o
-  - псс -std=c11 -Wall -Wpedantic -c ./src/*.c
+  - gcc -std=c11 -Wall -Wpedantic -c ./src/*.c
   - gcc -o dz2 *.o -fprofile-arcs -g -L. -lcrawlSequintally -lcrawlParallel -Wl,-rpath,.
   - mkdir build
   - cd build
