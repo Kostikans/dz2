@@ -92,6 +92,7 @@ int Crawl(const char* pattern,const char *path,Top **top)
 char* cat(char *s1, char *s2) {
     if(s1 == NULL || s2 == NULL)
         return 0;
+
     size_t len1 = strlen(s1);
     size_t len2 = strlen(s2);
 
