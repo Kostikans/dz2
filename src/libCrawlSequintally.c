@@ -1,4 +1,4 @@
-#include "../include/crawlSequintally.h"
+#include "libCrawlSequintally.h"
 #include "dirent.h"
 #include "limits.h"
 

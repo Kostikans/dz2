@@ -40,10 +40,10 @@ matrix:
 
 script:
   # скрипт сборки и тестирования проекта:
-  - gcc -std=c11 -Wall -Werror -Wpedantic -c ./src/crawlSequintally.c
-  - ar r crawlSequintally.a crawlSequintally.o
-  - gcc -std=c11 -Wall -Wpedantic -c -fPIC ./src/crawlParallel.c
-  - gcc -shared -o crawlParallel.so crawlParallel.o
+  - gcc -std=c11 -Wall -Werror -Wpedantic -c ./src/libCawlSequintally.c
+  - ar r libCrawlSequintally.a libCrawlSequintally.o
+  - gcc -std=c11 -Wall -Wpedantic -c -fPIC ./src/libCrawlParallel.c
+  - gcc -shared -o libCrawlParallel.so libCrawlParallel.o
   - gcc -o dz2 *.o -fprofile-arcs -ftest-coverage -g -L. -lcrawlSequintally -lcrawlParallel -Wl,-rpath,.
   - mkdir build
   - cd build
