@@ -45,7 +45,7 @@ script:
   - gcc -std=c11 -Wall -Wpedantic -c -fPIC ./src/libCrawlParallel.c
   - gcc -shared -o libCrawlParallel.so libCrawlParallel.o
   - gcc -std=c11 -Wall -Wpedantic -c ./src/*.c
-  - gcc -o dz2 *.o -fprofile-arcs -g -L. -lcrawlSequintally -lcrawlParallel -Wl,-rpath,.
+  - gcc -o dz2 *.o -fprofile-arcs -g -L. -lCrawlSequintally -lCrawlParallel -Wl,-rpath,.
   - mkdir build
   - cd build
   - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
