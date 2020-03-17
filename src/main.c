@@ -7,7 +7,103 @@
 void addFileName(char *path,int len, char *name){
     memcpy((void*)(path + len), name, len + strlen(name) + 1);
 }
+void test(char *path){
 
+
+    Top *top1 = NULL;
+    Crawl("kokekrewrkwel",path,&top1);
+    TopPrl *top2 = NULL;
+    CrawlPrl("kokekrewrkwel",path,&top2);
+    if(top1[0].levDistValue == top2[0].levDistValue){
+        printf("OK");
+    }
+    free(top1);
+    free(top2);
+
+
+    top1 = NULL;
+    Crawl("kokekrewrkwel",path ,&top1);
+    top2 = NULL;
+    CrawlPrl("kokekrewrkwel",path,&top2);
+    if(top1[1].levDistValue == top2[1].levDistValue){
+        printf("OK");
+    }
+    free(top1);
+    free(top2);
+
+
+    top1 = NULL;
+    Crawl("kokekrewrkwel",path,&top1);
+    top2 = NULL;
+    CrawlPrl("kokekrewrkwel",path,&top2);
+    if(top1[2].levDistValue == top2[2].levDistValue){
+        printf("OK");
+    }
+    free(top1);
+    free(top2);
+
+
+    top1 = NULL;
+    Crawl("kokekrewrkwel",path,&top1);
+    top2 = NULL;
+    CrawlPrl("kokekrewrkwel",path,&top2);
+    if(top1[3].levDistValue == top2[3].levDistValue){
+        printf("OK");
+    }
+    free(top1);
+    free(top2);
+
+    top1 = NULL;
+    Crawl("kokekrewrkwel",path,&top1);
+    top2 = NULL;
+    CrawlPrl("kokekrewrkwel",path,&top2);
+    if(top1[4].levDistValue == top2[4].levDistValue){
+        printf("OK");
+    }
+    free(top1);
+    free(top2);
+
+    top1 = NULL;
+    Crawl("kokekrewrkwel",path,&top1);
+    const char * t = "2.txt";
+    if(*top1[3].fileName == *t){
+        printf("OK");
+    }
+    free(top1);
+
+    top1 = NULL;
+    Crawl("kokekrewrkwel",path,&top1);
+    t = "10.txt";
+    if(*top1[0].fileName == *t){
+        printf("OK");
+    }
+    free(top1);
+
+    top2 = NULL;
+    CrawlPrl("kokekrewrkwel",path,&top2);
+    t = "2.txt";
+    if(*top2[2].fileName == *t){
+        printf("OK");
+    }
+    free(top2);
+
+    top1 = NULL;
+    Crawl("kokekrewrkwel",path,&top1);
+    t = "4.txt";
+    if(*top1[1].fileName == *t){
+        printf("OK");
+    }
+    free(top1);
+
+
+    top2 = NULL;
+    CrawlPrl("kokekrewrkwel",path,&top2);
+    t = "3.txt";
+    if(*top2[4].fileName == *t){
+        printf("OK");
+    }
+    free(top2);
+}
 int main(){
      char *path = NULL;
     path = get_current_dir_name();
@@ -89,6 +185,8 @@ int main(){
     len = (int)strlen(path);
     path = (char*)realloc(path,sizeof(char) * (len * 3));
     mempcpy((void*)(path + strlen(path)),testFolder,strlen(path) + strlen(testFolder) + 1);
+
+    test(path);
 
     Crawl("kokekrewrkwel",path,&top1);
 

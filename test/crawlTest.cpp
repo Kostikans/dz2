@@ -22,7 +22,7 @@ int getLastOf(char *path){
 }
 
 TEST(case1,test1){
-    printf("KEK");
+
     char paths[150];
     getcwd(paths,150);
     char *testFolder = (char*)"/files";
@@ -30,7 +30,7 @@ TEST(case1,test1){
     len = getLastOf(paths);
     memcpy(paths + len ,testFolder, (len + strlen(testFolder)) * sizeof(char));
     char *path = (char*)malloc(sizeof(char) * (len + 2 + strlen(testFolder)));
-    memcpy(path,paths,sizeof(char) * (len +2  + strlen(testFolder)));
+    memcpy(path,paths,sizeof(char) * (len + 2 + strlen(testFolder)));
     printf("%s",path);
 
     Top *top1 = NULL;
