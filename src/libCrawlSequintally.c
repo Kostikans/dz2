@@ -124,6 +124,7 @@ int initTop(Top *top){
     {
         top->fileName[i] = '0';
     }
+    return 1;
 }
 
 int createTop(RequestData *data,int count,Top **top){

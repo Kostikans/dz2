@@ -166,6 +166,7 @@ int initTopPrl(TopPrl *top){
     {
         top->fileName[i] = '0';
     }
+    return 1;
 }
 
 int createTopPrl(RequestDataPrl *data,int count,TopPrl **top){
