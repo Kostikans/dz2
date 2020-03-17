@@ -51,6 +51,7 @@ script:
   - cd build
   - cmake ..
   - cmake —build .
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind —show-leak-kinds=all ./dz2 ; fi
+  - ctest --output-on-failure
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind  ./dz2 ; fi
   - cd ..
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck —enable=warning,performance,information,style *.c *.h ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck —enable=warning,performance,information ./src ./test ./include/*.h ; fi

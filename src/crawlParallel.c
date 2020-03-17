@@ -62,6 +62,7 @@ int fileRequestPrl(RequestDataPrl *data)
     }
     data->levDist = levDist[patternLen];
     free(levDist);
+    return 1;
 }
 
 int CrawlPrl(const char* pattern,const char *path,TopPrl **top){
