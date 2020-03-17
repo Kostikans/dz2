@@ -5,7 +5,6 @@ language: c
 
 os:
   - linux
-  - osx
 
 compiler:
   - gcc
@@ -51,7 +50,7 @@ script:
   - cd build
   - cmake ..
   - cmake —build .
-  - cd ..
   - ctest --output-on-failure
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind  ./dz2 ; fi
+  - cd ..
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck —enable=warning,performance,information ./src ./test ./include/*.h ; fi
