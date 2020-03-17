@@ -40,7 +40,7 @@ matrix:
 
 script:
   # скрипт сборки и тестирования проекта:
-  - gcc -std=c11 -Wall -Werror -Wpedantic -c ./src/libCawlSequintally.c
+  - gcc -std=c11 -Wall -Werror -Wpedantic -c ./src/libCrawlSequintally.c
   - ar r libCrawlSequintally.a libCrawlSequintally.o
   - gcc -std=c11 -Wall -Wpedantic -c -fPIC ./src/libCrawlParallel.c
   - gcc -shared -o libCrawlParallel.so libCrawlParallel.o
