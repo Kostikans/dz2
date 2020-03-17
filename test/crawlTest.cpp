@@ -22,11 +22,12 @@ int getLastOf(char *path){
 
 TEST(case1,test1){
 
-    char *path = get_current_dir_name();
+    char *paths = get_current_dir_name();
     char *testFolder = (char*)"/files";
-    int len = getLastOf(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
+    int len = getLastOf(paths);
+    char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
+    memcpy(path,paths,strlen(paths));
+    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -39,11 +40,12 @@ TEST(case1,test1){
 
 TEST(case2,test2)
 {
-    char *path = get_current_dir_name();
+    char *paths = get_current_dir_name();
     char *testFolder = (char*)"/files";
-    int len = getLastOf(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
+    int len = getLastOf(paths);
+    char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
+    memcpy(path,paths,strlen(paths));
+    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
 
     Top *top1;
     Crawl("kokekrewrkwel",path ,&top1);
@@ -56,11 +58,12 @@ TEST(case2,test2)
 
 TEST(case3,test3)
 {
-    char *path = get_current_dir_name();
+    char *paths = get_current_dir_name();
     char *testFolder = (char*)"/files";
-    int len = getLastOf(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
+    int len = getLastOf(paths);
+    char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
+    memcpy(path,paths,strlen(paths));
+    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -72,11 +75,12 @@ TEST(case3,test3)
 }
 
 TEST(case4,test4){
-    char *path = get_current_dir_name();
+    char *paths = get_current_dir_name();
     char *testFolder = (char*)"/files";
-    int len = getLastOf(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
+    int len = getLastOf(paths);
+    char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
+    memcpy(path,paths,strlen(paths));
+    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -88,11 +92,12 @@ TEST(case4,test4){
 }
 
 TEST(case5,test5){
-    char *path = get_current_dir_name();
+    char *paths = get_current_dir_name();
     char *testFolder = (char*)"/files";
-    int len = getLastOf(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
+    int len = getLastOf(paths);
+    char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
+    memcpy(path,paths,strlen(paths));
+    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -104,11 +109,12 @@ TEST(case5,test5){
 }
 
 TEST(case6,test6){
-    char *path = get_current_dir_name();
+    char *paths = get_current_dir_name();
     char *testFolder = (char*)"/files";
-    int len = getLastOf(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
+    int len = getLastOf(paths);
+    char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
+    memcpy(path,paths,strlen(paths));
+    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -118,11 +124,12 @@ TEST(case6,test6){
 }
 
 TEST(case7,test7){
-    char *path = get_current_dir_name();
+    char *paths = get_current_dir_name();
     char *testFolder = (char*)"/files";
-    int len = getLastOf(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
+    int len = getLastOf(paths);
+    char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
+    memcpy(path,paths,strlen(paths));
+    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -132,11 +139,12 @@ TEST(case7,test7){
 }
 
 TEST(case8,test8){
-    char *path = get_current_dir_name();
+    char *paths = get_current_dir_name();
     char *testFolder = (char*)"/files";
-    int len = getLastOf(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
+    int len = getLastOf(paths);
+    char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
+    memcpy(path,paths,strlen(paths));
+    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
 
     TopPrl *top2;
     CrawlPrl("kokekrewrkwel",path,&top2);
@@ -146,11 +154,12 @@ TEST(case8,test8){
 }
 
 TEST(case9,test9){
-    char *path = get_current_dir_name();
+    char *paths = get_current_dir_name();
     char *testFolder = (char*)"/files";
-    int len = getLastOf(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
+    int len = getLastOf(paths);
+    char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
+    memcpy(path,paths,strlen(paths));
+    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -160,11 +169,12 @@ TEST(case9,test9){
 }
 
 TEST(case10,test10){
-    char *path = get_current_dir_name();
+    char *paths = get_current_dir_name();
     char *testFolder = (char*)"/files";
-    int len = getLastOf(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
+    int len = getLastOf(paths);
+    char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
+    memcpy(path,paths,strlen(paths));
+    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) + 1);
 
     TopPrl *top2;
     CrawlPrl("kokekrewrkwel",path,&top2);
