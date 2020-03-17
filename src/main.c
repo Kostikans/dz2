@@ -1,5 +1,5 @@
-#include "libCrawlSequintally.h"
-#include "libCrawlParallel.h"
+#include "../include/libCrawlSequintally.h"
+#include "../include/libCrawlParallel.h"
 #include "time.h"
 
 int main(){
