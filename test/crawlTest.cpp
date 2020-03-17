@@ -27,7 +27,7 @@ TEST(case1,test1){
     int len = getLastOf(paths);
     char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
     memcpy(path,paths,strlen(paths));
-    memcpy((void*)(path + len),testFolder, len + strlen(testFolder));
+    memcpy(path + len,testFolder, len + strlen(testFolder));
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -45,7 +45,7 @@ TEST(case2,test2)
     int len = getLastOf(paths);
     char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
     memcpy(path,paths,strlen(paths));
-    memcpy((void*)(path + len),testFolder, len + strlen(testFolder));
+    memcpy(path + len,testFolder, len + strlen(testFolder));
 
     Top *top1;
     Crawl("kokekrewrkwel",path ,&top1);
@@ -63,7 +63,7 @@ TEST(case3,test3)
     int len = getLastOf(paths);
     char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
     memcpy(path,paths,strlen(paths));
-    memcpy((void*)(path + len),testFolder, len + strlen(testFolder));
+    memcpy(path + len,testFolder, len + strlen(testFolder));
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -80,7 +80,7 @@ TEST(case4,test4){
     int len = getLastOf(paths);
     char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
     memcpy(path,paths,strlen(paths));
-    memcpy((void*)(path + len),testFolder, len + strlen(testFolder));
+    memcpy(path + len,testFolder, len + strlen(testFolder));
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -97,7 +97,7 @@ TEST(case5,test5){
     int len = getLastOf(paths);
     char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
     memcpy(path,paths,strlen(paths));
-    memcpy((void*)(path + len),testFolder, len + strlen(testFolder));
+    memcpy(path + len,testFolder, len + strlen(testFolder));
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -114,7 +114,7 @@ TEST(case6,test6){
     int len = getLastOf(paths);
     char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
     memcpy(path,paths,strlen(paths));
-    memcpy((void*)(path + len),testFolder, len + strlen(testFolder));
+    memcpy(path + len,testFolder, len + strlen(testFolder));
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -129,7 +129,7 @@ TEST(case7,test7){
     int len = getLastOf(paths);
     char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
     memcpy(path,paths,strlen(paths));
-    memcpy((void*)(path + len),testFolder, len + strlen(testFolder));
+    memcpy(path + len,testFolder, len + strlen(testFolder));
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -144,7 +144,7 @@ TEST(case8,test8){
     int len = getLastOf(paths);
     char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
     memcpy(path,paths,strlen(paths));
-    memcpy((void*)(path + len),testFolder, len + strlen(testFolder));
+    memcpy(path + len,testFolder, len + strlen(testFolder));
 
     TopPrl *top2;
     CrawlPrl("kokekrewrkwel",path,&top2);
@@ -159,7 +159,7 @@ TEST(case9,test9){
     int len = getLastOf(paths);
     char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
     memcpy(path,paths,strlen(paths));
-    memcpy((void*)(path + len),testFolder, len + strlen(testFolder) );
+    memcpy(path + len,testFolder, len + strlen(testFolder) );
 
     Top *top1;
     Crawl("kokekrewrkwel",path,&top1);
@@ -174,7 +174,7 @@ TEST(case10,test10){
     int len = getLastOf(paths);
     char *path = (char*)malloc(sizeof(char) * (len + strlen(testFolder)));
     memcpy(path,paths,strlen(paths));
-    memcpy((void*)(path + len),testFolder, len + strlen(testFolder));
+    memcpy(path + len,testFolder, len + strlen(testFolder));
 
     TopPrl *top2;
     CrawlPrl("kokekrewrkwel",path,&top2);
