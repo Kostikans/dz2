@@ -11,6 +11,7 @@ int crawl(const char* pattern,const char *path,Top **top)
         closedir(mydir);
         return 0;
     }
+    size_t requestDataCount = 0;
     RequestData *data = (RequestData*)malloc(FILES_COUNT * sizeof(RequestData));
     int count = 0;
     struct dirent *entry;
