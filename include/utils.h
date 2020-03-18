@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "stdio.h"
-
 #define FILE_NAME_BUFFER_SIZE 100
 
 typedef struct Top{
