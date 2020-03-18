@@ -2,8 +2,6 @@
 #include "dirent.h"
 #include "limits.h"
 
-#define FILES_COUNT 500
-
 void threadsRunPrl(pthread_t **threads,int pullSize)
 {
     for(size_t i = 0; i < pullSize; ++i)
@@ -24,7 +22,10 @@ int crawlPrl(const char* pattern,const char *path,Top **top){
     pthread_t *pthread[ThreadsCount];
     for(int i = 0; i < ThreadsCount; ++i)
         pthread[i] = NULL;
-    RequestData *data = (RequestData*)malloc(FILES_COUNT * sizeof(RequestData));
+
+    int requestDataCount = 1;
+    RequestData *data = (RequestData*)malloc(requestDataCount * sizeof(RequestData));
+
     struct dirent *entry;
     int ThreadCount = 0;
     entry = readdir(mydir);
@@ -44,8 +45,17 @@ int crawlPrl(const char* pattern,const char *path,Top **top){
         }
         char* name = entry->d_name;
         if(strcmp(name,".") != 0 && strcmp(name,"..") != 0) {
-
             char* filePath = cat((char*)path,name);
+
+            if(count == requestDataCount){
+                requestDataCount *= 2;
+                RequestData *temp;
+                temp = realloc(data,requestDataCount * sizeof(RequestData));
+                if(temp == NULL)
+                    return 0;
+                data = temp;
+            }
+
             data[count].name = name;
             data[count].pattern = pattern;
             data[count].path = (char*)calloc(sizeof(char),strlen(filePath) + 1);

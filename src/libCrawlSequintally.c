@@ -2,8 +2,6 @@
 #include "dirent.h"
 #include "limits.h"
 
-#define FILES_COUNT 500
-
 int crawl(const char* pattern,const char *path,Top **top)
 {
     DIR *mydir = opendir(path);
@@ -11,8 +9,8 @@ int crawl(const char* pattern,const char *path,Top **top)
         closedir(mydir);
         return 0;
     }
-    size_t requestDataCount = 0;
-    RequestData *data = (RequestData*)malloc(FILES_COUNT * sizeof(RequestData));
+    int requestDataCount = 1;
+    RequestData *data = (RequestData*)malloc(requestDataCount * sizeof(RequestData));
     int count = 0;
     struct dirent *entry;
     entry = readdir(mydir);
@@ -23,6 +21,15 @@ int crawl(const char* pattern,const char *path,Top **top)
         char* name = entry->d_name;
         if(strcmp(name,".") != 0 && strcmp(name,"..") != 0) {
             char* filePath = cat((char*)path,name);
+
+            if(count == requestDataCount){
+                requestDataCount *= 2;
+                RequestData *temp;
+                temp = realloc(data,requestDataCount * sizeof(RequestData));
+                if(temp == NULL)
+                    return 0;
+                data = temp;
+            }
             data[count].name = name;
             data[count].pattern = pattern;
             data[count].path = filePath;
