@@ -42,7 +42,8 @@ int fileRequest(RequestData *data)
     fileSize = ftello(file);
     char buffer[fileSize * sizeof(char)];
     fseek(file, 0, 0);
-    fgets(buffer,fileSize,file);
+    if(fgets(buffer,fileSize,file) == NULL)
+        return 0;
     fclose(file);
 
     int *levDist = (int*)calloc(sizeof(int),patternLen + 1);
