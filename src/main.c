@@ -130,7 +130,11 @@ int main(){
     char *testFolder = "/files";
 
     int len = (int)strlen(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
+    char *tmp = NULL;
+    tmp = (char*)realloc(path,sizeof(char) * (len * 3));
+    if(tmp != NULL){
+        path = tmp;
+    }
     mempcpy((void*)(path + strlen(path)),testFolder,strlen(path) + strlen(testFolder) + 1);
     len = (int)strlen(path);
     mkdir(path, (__mode_t) (S_IRWXU | S_IRWXG | S_IRWXO));
