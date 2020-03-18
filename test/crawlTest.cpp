@@ -34,9 +34,9 @@ TEST(case1,test1){
     printf("%s",path);
 
     Top *top1 = NULL;
-    Crawl("kokekrewrkwel",path,&top1);
-    TopPrl *top2 = NULL;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    crawl("kokekrewrkwel",path,&top1);
+    Top *top2 = NULL;
+    crawlPrl("kokekrewrkwel",path,&top2);
     ASSERT_EQ(top1[0].levDistValue, top2[0].levDistValue);
     free(path);
     free(top1);
@@ -54,10 +54,10 @@ TEST(case2,test2)
     char *path = (char*)malloc(sizeof(char) * (len + 2 + strlen(testFolder)));
     memcpy(path,paths,sizeof(char) * (len +2  + strlen(testFolder)));
 
-    Top *top1;
-    Crawl("kokekrewrkwel",path ,&top1);
-    TopPrl *top2;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    Top *top1 = NULL;
+    crawl("kokekrewrkwel",path,&top1);
+    Top *top2 = NULL;
+    crawlPrl("kokekrewrkwel",path,&top2);
     ASSERT_EQ(top1[1].levDistValue, top2[1].levDistValue);
     free(path);
     free(top1);
@@ -76,10 +76,10 @@ TEST(case3,test3)
     memcpy(path,paths,sizeof(char) * (len +2  + strlen(testFolder)));
 
 
-    Top *top1;
-    Crawl("kokekrewrkwel",path,&top1);
-    TopPrl *top2;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    Top *top1 = NULL;
+    crawl("kokekrewrkwel",path,&top1);
+    Top *top2 = NULL;
+    crawlPrl("kokekrewrkwel",path,&top2);
     ASSERT_EQ(top1[2].levDistValue ,top2[2].levDistValue);
     free(path);
     free(top1);
@@ -96,10 +96,10 @@ TEST(case4,test4){
     char *path = (char*)malloc(sizeof(char) * (len + 2 + strlen(testFolder)));
     memcpy(path,paths,sizeof(char) * (len +2  + strlen(testFolder)));
 
-    Top *top1;
-    Crawl("kokekrewrkwel",path,&top1);
-    TopPrl *top2;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    Top *top1 = NULL;
+    crawl("kokekrewrkwel",path,&top1);
+    Top *top2 = NULL;
+    crawlPrl("kokekrewrkwel",path,&top2);
     ASSERT_EQ(top1[3].levDistValue, top2[3].levDistValue);
     free(path);
     free(top1);
@@ -116,10 +116,10 @@ TEST(case5,test5){
     char *path = (char*)malloc(sizeof(char) * (len + 2 + strlen(testFolder)));
     memcpy(path,paths,sizeof(char) * (len +2  + strlen(testFolder)));
 
-    Top *top1;
-    Crawl("kokekrewrkwel",path,&top1);
-    TopPrl *top2;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    Top *top1 = NULL;
+    crawl("kokekrewrkwel",path,&top1);
+    Top *top2 = NULL;
+    crawlPrl("kokekrewrkwel",path,&top2);
     ASSERT_EQ(top1[4].levDistValue, top2[4].levDistValue);
     free(path);
     free(top1);
@@ -135,8 +135,9 @@ TEST(case6,test6){
     memcpy(paths + len ,testFolder, (len + strlen(testFolder)) * sizeof(char));
     char *path = (char*)malloc(sizeof(char) * (len + 2 + strlen(testFolder)));
     memcpy(path,paths,sizeof(char) * (len +2  + strlen(testFolder)));
+
     Top *top1;
-    Crawl("kokekrewrkwel",path,&top1);
+    crawl("kokekrewrkwel",path,&top1);
     const char * t = "2.txt";
     ASSERT_EQ(*top1[3].fileName, *t);
     free(path);
@@ -156,7 +157,7 @@ TEST(case7,test7){
 
 
     Top *top1;
-    Crawl("kokekrewrkwel",path,&top1);
+    crawl("kokekrewrkwel",path,&top1);
     const char * t = "10.txt";
     ASSERT_EQ(*top1[0].fileName, *t);
     free(top1);
@@ -173,8 +174,8 @@ TEST(case8,test8){
     char *path = (char*)malloc(sizeof(char) * (len + 2 + strlen(testFolder)));
     memcpy(path,paths,sizeof(char) * (len +2  + strlen(testFolder)));
 
-    TopPrl *top2;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    Top *top2;
+    crawlPrl("kokekrewrkwel",path,&top2);
     const char *t = "2.txt";
     ASSERT_EQ(*top2[3].fileName, *t);
     free(top2);
@@ -192,7 +193,7 @@ TEST(case9,test9){
     memcpy(path,paths,sizeof(char) * (len +2  + strlen(testFolder)));
 
     Top *top1;
-    Crawl("kokekrewrkwel",path,&top1);
+    crawl("kokekrewrkwel",path,&top1);
     const char *t = "4.txt";
     ASSERT_EQ(*top1[1].fileName, *t);
     free(top1);
@@ -210,8 +211,8 @@ TEST(case10,test10){
     memcpy(path,paths,sizeof(char) * (len +2  + strlen(testFolder)));
 
 
-    TopPrl *top2;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    Top *top2;
+    crawlPrl("kokekrewrkwel",path,&top2);
     const char *t = "3.txt";
     ASSERT_EQ( *top2[4].fileName, *t);
     free(top2);

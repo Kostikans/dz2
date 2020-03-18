@@ -16,7 +16,7 @@ int crawlPrl(const char* pattern,const char *path,Top **top){
     int ThreadsCount = get_nprocs();
     DIR *mydir = opendir(path);
     if(mydir == NULL) {
-        free(mydir);
+        closedir(mydir);
         return 0;
     }
     int count = 0;
