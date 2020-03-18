@@ -22,6 +22,6 @@ file(GLOB sources
         "${PROJECT_SOURCE_DIR}/include/*.h"
         "${PROJECT_SOURCE_DIR}/src/*.c")
 
-add_executable(dz2 ${sources} )
+add_executable(dz2 ${sources} include/utils.h src/utils.c)
 find_package(Threads REQUIRED)
 target_link_libraries(dz2 Threads::Threads)

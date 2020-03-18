@@ -10,90 +10,120 @@ void addFileName(char *path,int len, char *name){
 
 void test(char *path){
     Top *top1 = NULL;
-    Crawl("kokekrewrkwel",path,&top1);
-    TopPrl *top2 = NULL;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    crawl("kokekrewrkwel",path,&top1);
+    Top *top2 = NULL;
+    crawlPrl("kokekrewrkwel",path,&top2);
     if(top1[0].levDistValue == top2[0].levDistValue){
         printf("OK\n");
     }
+    else{
+        printf("NO\n");
+    }
     free(top1);
     free(top2);
 
     top1 = NULL;
-    Crawl("kokekrewrkwel",path ,&top1);
+    crawl("kokekrewrkwel",path ,&top1);
     top2 = NULL;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    crawlPrl("kokekrewrkwel",path,&top2);
     if(top1[1].levDistValue == top2[1].levDistValue){
         printf("OK\n");
     }
+    else{
+        printf("NO\n");
+    }
     free(top1);
     free(top2);
 
     top1 = NULL;
-    Crawl("kokekrewrkwel",path,&top1);
+    crawl("kokekrewrkwel",path,&top1);
     top2 = NULL;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    crawlPrl("kokekrewrkwel",path,&top2);
     if(top1[2].levDistValue == top2[2].levDistValue){
         printf("OK\n");
     }
+    else{
+        printf("NO\n");
+    }
     free(top1);
     free(top2);
 
     top1 = NULL;
-    Crawl("kokekrewrkwel",path,&top1);
+    crawl("kokekrewrkwel",path,&top1);
     top2 = NULL;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    crawlPrl("kokekrewrkwel",path,&top2);
     if(top1[3].levDistValue == top2[3].levDistValue){
         printf("OK\n");
     }
+    else{
+        printf("NO\n");
+    }
     free(top1);
     free(top2);
 
     top1 = NULL;
-    Crawl("kokekrewrkwel",path,&top1);
+    crawl("kokekrewrkwel",path,&top1);
     top2 = NULL;
-    CrawlPrl("kokekrewrkwel",path,&top2);
+    crawlPrl("kokekrewrkwel",path,&top2);
     if(top1[4].levDistValue == top2[4].levDistValue){
         printf("OK\n");
     }
+    else{
+        printf("NO\n");
+    }
     free(top1);
     free(top2);
 
     top1 = NULL;
-    Crawl("kokekrewrkwel",path,&top1);
-    if(strcmp(top1[3].fileName,"2.txt") != 0){
+    crawl("kokekrewrkwel",path,&top1);
+    if(strcmp(top1[3].fileName,"2.txt") == 0){
         printf("OK\n");
+    }
+    else{
+        printf("NO\n");
     }
     free(top1);
 
     top1 = NULL;
-    Crawl("kokekrewrkwel",path,&top1);
-    if(strcmp(top1[0].fileName, "10.txt") != 0){
+    crawl("kokekrewrkwel",path,&top1);
+    if(strcmp(top1[0].fileName, "10.txt") == 0){
         printf("OK\n");
+    }
+    else{
+        printf("NO\n");
     }
     free(top1);
 
     top2 = NULL;
-    CrawlPrl("kokekrewrkwel",path,&top2);
-    if(strcmp(top2[2].fileName,"2.txt") != 0){
+    crawlPrl("kokekrewrkwel",path,&top2);
+    if(strcmp(top2[2].fileName,"6.txt") == 0){
         printf("OK\n");
+    } else{
+        printf("NO\n");
     }
     free(top2);
 
     top1 = NULL;
-    Crawl("kokekrewrkwel",path,&top1);
-    if(strcmp(top1[1].fileName,"4.txt") != 0){
+    crawl("kokekrewrkwel",path,&top1);
+    if(strcmp(top1[1].fileName,"4.txt") == 0){
         printf("OK\n");
+    }
+    else{
+        printf("NO\n");
     }
     free(top1);
 
     top2 = NULL;
-    CrawlPrl("kokekrewrkwel",path,&top2);
-    if(strcmp(top2[4].fileName,"3.txt") != 0){
+    crawlPrl("kokekrewrkwel",path,&top2);
+    if(strcmp(top2[4].fileName,"3.txt") == 0){
         printf("OK\n");
+    }
+    else{
+        printf("NO\n");
     }
     free(top2);
 }
+
 int main(){
      char *path = NULL;
     path = get_current_dir_name();
@@ -178,18 +208,27 @@ int main(){
 
     test(path);
 
-    Crawl("kokekrewrkwel",path,&top1);
+    crawl("kokekrewrkwel",path,&top1);
 
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
     printf("%f\n",time_spent);
 
-    TopPrl *top2 = NULL;
+    Top *top2 = NULL;
     begin = clock();
-    CrawlPrl("kokekrewrkwel", path ,&top2);
+    crawlPrl("kokekrewrkwel", path ,&top2);
     end = clock();
     time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
     printf("%f",time_spent);
+
+    printf("\n");
+    for(int i = 0; i < 5; ++i){
+        printf("%s ",top1[i].fileName);
+    }
+    printf("\n");
+    for(int i = 0; i < 5; ++i){
+        printf("%s ",top2[i].fileName);
+    }
 
     free(top1);
     free(top2);
