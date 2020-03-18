@@ -1,6 +1,5 @@
 #include "../include/libCrawlSequintally.h"
 #include "dirent.h"
-#include "limits.h"
 
 int crawl(const char* pattern,const char *path,Top **top)
 {

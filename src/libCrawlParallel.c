@@ -1,6 +1,5 @@
 #include "../include/libCrawlParallel.h"
 #include "dirent.h"
-#include "limits.h"
 
 void threadsRunPrl(pthread_t **threads,int pullSize)
 {
