@@ -3,8 +3,6 @@ project(dz2 C)
 enable_language(C CXX)
 set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -std=c11 -Werror -Wall -Wpedantic -fPIC" )
 
-enable_testing()
-
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
 add_library(MyStaticLib STATIC ${PROJECT_SOURCE_DIR}/src/libCrawlSequintally.c)
