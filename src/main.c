@@ -8,6 +8,65 @@ void addFileName(char *path,int len, char *name){
     memcpy((void*)(path + len), name, len + strlen(name) + 1);
 }
 
+static void addTestString(const char *str,char *path, char* fileName, int len){
+    addFileName(path,len,fileName);
+    FILE *mf = fopen(path,"w");
+
+    fprintf(mf,"%s", str);
+    fclose(mf);
+
+}
+
+static int createTestFiles(){
+    char *path = NULL;
+    path = get_current_dir_name();
+    char *testFolder = "/files";
+
+    int len = (int)strlen(path);
+    char *tmp = NULL;
+    tmp = (char*)realloc(path,sizeof(char) * (len * 3));
+    if(tmp != NULL){
+        path = tmp;
+    }
+
+    mempcpy((void*)(path + strlen(path)),testFolder,strlen(path) + strlen(testFolder) + 1);
+    len = (int)strlen(path);
+    mkdir(path, (__mode_t) (S_IRWXU | S_IRWXG | S_IRWXO));
+
+    const char* s1 = "kostyarwerwekekewrwejklfjklsdjklfjdsmvnkltwejklnvdmsjrkqejfsd,jekljds,mklwrjkldf,gjwrekljmfdm";
+    addTestString(s1,path,"/1.txt",len);
+
+    const char* s2 = "kostyrewmr34,2mlmrel";
+    addTestString(s2,path,"/2.txt",len);
+
+    const char* s3 = "kostrekerdekw;le23ewekeerwe";
+    addTestString(s3,path,"/3.txt",len);
+
+    const char* s4 = "kosrmemwmkewrmwermw";
+    addTestString(s4,path,"/4.txt",len);
+
+    const char* s5 = "kokekrewrkwelewrternsdmnjk24h3jfnsmdjw4hfmsdkjth4wnfdsmntwhvmfds";
+    addTestString(s5,path,"/5.txt",len);
+
+    const char* s6 = "rewrlewrewkewrwe;l";
+    addTestString(s6,path,"/6.txt",len);
+
+    const char* s7 = "432ljefsfsdrklkl;ewkrwe";
+    addTestString(s7,path,"/7.txt",len);
+
+    const char* s8 = "trendf,nlktjtkjrelkfje";
+    addTestString(s8,path,"/8.txt",len);
+
+    const char* s9 = "dsncmxetreomngfdmngfffdsr43rirweffmdnmcxuweiorjvkcx";
+    addTestString(s9,path,"/9.txt",len);
+
+    const char* s10 = "kokekrewrkwel";
+    addTestString(s10,path,"/10.txt",len);
+
+    free(path);
+    return 1;
+}
+
 void test(char *path){
     Top *top1 = NULL;
     crawl("kokekrewrkwel",path,&top1);
@@ -125,95 +184,19 @@ void test(char *path){
 }
 
 int main(){
-     char *path = NULL;
-    path = get_current_dir_name();
+    createTestFiles();
+    char * path = get_current_dir_name();
     char *testFolder = "/files";
 
     int len = (int)strlen(path);
-    char *tmp = NULL;
-    tmp = (char*)realloc(path,sizeof(char) * (len * 3));
-    if(tmp != NULL){
-        path = tmp;
-    }
-    mempcpy((void*)(path + strlen(path)),testFolder,strlen(path) + strlen(testFolder) + 1);
-    len = (int)strlen(path);
-    mkdir(path, (__mode_t) (S_IRWXU | S_IRWXG | S_IRWXO));
-
-    addFileName(path,len,"/1.txt");
-    FILE *mf = fopen(path,"w");
-    const char* s1 = "kostyarwerwekekewrwejklfjklsdjklfjdsmvnkltwejklnvdmsjrkqejfsd,jekljds,mklwrjkldf,gjwrekljmfdm";
-    fprintf(mf,"%s", s1);
-    fclose(mf);
-
-    addFileName(path,len,"/2.txt");
-    mf = fopen(path,"w");
-    const char* s2 = "kostyrewmr34,2mlmrel";
-    fprintf(mf,"%s", s2);
-    fclose(mf);
-
-    addFileName(path,len,"/3.txt");
-    mf = fopen(path,"w");
-    const char* s3 = "kostrekerdekw;le23ewekeerwe";
-    fprintf(mf,"%s", s3);
-    fclose(mf);
-
-    addFileName(path,len,"/4.txt");
-    mf = fopen(path,"w");
-    const char* s4 = "kosrmemwmkewrmwermw";
-    fprintf(mf,"%s", s4);
-    fclose(mf);
-
-    addFileName(path,len,"/5.txt");
-    mf = fopen(path,"w");
-    const char* s5 = "kokekrewrkwelewrternsdmnjk24h3jfnsmdjw4hfmsdkjth4wnfdsmntwhvmfds";
-    fprintf(mf,"%s", s5);
-    fclose(mf);
-
-    addFileName(path,len,"/6.txt");
-    mf = fopen(path,"w");
-    const char* s6 = "rewrlewrewkewrwe;l";
-    fprintf(mf,"%s", s6);
-    fclose(mf);
-
-    addFileName(path,len,"/7.txt");
-    mf = fopen(path,"w");
-    const char* s7 = "432ljefsfsdrklkl;ewkrwe";
-    fprintf(mf,"%s", s7);
-    fclose(mf);
-
-    addFileName(path,len,"/8.txt");
-    mf = fopen(path,"w");
-    const char* s8 = "trendf,nlktjtkjrelkfje";
-    fprintf(mf,"%s", s8);
-    fclose(mf);
-
-    addFileName(path,len,"/9.txt");
-    mf = fopen(path,"w");
-    const char* s9 = "dsncmxetreomngfdmngfffdsr43rirweffmdnmcxuweiorjvkcx";
-    fprintf(mf,"%s", s9);
-    fclose(mf);
-
-    addFileName(path,len,"/10.txt");
-    mf = fopen(path,"w");
-    const char* s10 = "kokekrewrkwel";
-    fprintf(mf,"%s", s10);
-    fclose(mf);
-
-    addFileName(path,len,"/1.txt");
-    Top *top1 = NULL;
-    clock_t begin = clock();
-
-    free(path);
-    path = get_current_dir_name();
-
-    len = (int)strlen(path);
     path = (char*)realloc(path,sizeof(char) * (len * 3));
     mempcpy((void*)(path + strlen(path)),testFolder,strlen(path) + strlen(testFolder) + 1);
 
     test(path);
 
+    Top *top1 = NULL;
+    clock_t begin = clock();
     crawl("kokekrewrkwel",path,&top1);
-
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
     printf("%f\n",time_spent);

@@ -3,6 +3,8 @@
 
 int crawl(const char* pattern,const char *path,Top **top)
 {
+    if(pattern == NULL || path == NULL)
+        return 0;
     DIR *mydir = opendir(path);
     if(mydir == NULL) {
         closedir(mydir);
@@ -25,8 +27,12 @@ int crawl(const char* pattern,const char *path,Top **top)
                 requestDataCount *= 2;
                 RequestData *temp;
                 temp = realloc(data,requestDataCount * sizeof(RequestData));
-                if(temp == NULL)
+                if(temp == NULL) {
+                    free(data);
+                    closedir(mydir);
+                    free(filePath);
                     return 0;
+                }
                 data = temp;
             }
             data[count].name = name;

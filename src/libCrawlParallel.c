@@ -1,5 +1,6 @@
 #include "../include/libCrawlParallel.h"
 #include "dirent.h"
+static void threadsRunPrl(pthread_t **threads,int pullSize);
 
 void threadsRunPrl(pthread_t **threads,int pullSize)
 {
@@ -10,6 +11,8 @@ void threadsRunPrl(pthread_t **threads,int pullSize)
 }
 
 int crawlPrl(const char* pattern,const char *path,Top **top){
+    if(pattern == NULL || path == NULL)
+        return 0;
     int ThreadsCount = get_nprocs();
     DIR *mydir = opendir(path);
     if(mydir == NULL) {
@@ -50,22 +53,38 @@ int crawlPrl(const char* pattern,const char *path,Top **top){
                 requestDataCount *= 2;
                 RequestData *temp;
                 temp = realloc(data,requestDataCount * sizeof(RequestData));
-                if(temp == NULL)
+                if(temp == NULL) {
+                    free(data);
+                    closedir(mydir);
+                    free(filePath);
                     return 0;
+                }
                 data = temp;
             }
 
             data[count].name = name;
             data[count].pattern = pattern;
             data[count].path = (char*)calloc(sizeof(char),strlen(filePath) + 1);
-            if(data[count].path == NULL)
+            if(data[count].path == NULL) {
+                free(data);
+                closedir(mydir);
+                free(filePath);
                 return 0;
-            if(!memcpy((char*)data[count].path,filePath,strlen(filePath) * sizeof(char)))
+            }
+            if(!memcpy((char*)data[count].path,filePath,strlen(filePath) * sizeof(char))) {
+                free(data);
+                closedir(mydir);
+                free(filePath);
                 return 0;
+            }
 
             pthread[ThreadCount] = (pthread_t*) malloc(sizeof(pthread_t));
-            if(pthread[ThreadCount] == NULL)
+            if(pthread[ThreadCount] == NULL) {
+                free(data);
+                closedir(mydir);
+                free(filePath);
                 return 0;
+            }
             ++ThreadCount;
             if(ThreadCount == ThreadsCount)
             {

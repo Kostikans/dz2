@@ -20,9 +20,10 @@ typedef struct RequestData
     int levDist;
 } RequestData;
 
-char* cat(char *s1, char *s2);
+char* cat(const char *s1,const char *s2);
 int min(int a1, int a2);
 int freeRequestData(RequestData *data);
 int createTop(RequestData *data,int count,Top **top);
 int initTop(Top *top);
 int fileRequest(RequestData *data);
+int createBuffer(char **buffer,RequestData *data);

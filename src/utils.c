@@ -3,7 +3,7 @@
 
 #define TOP_SIZE 5
 
-char* cat(char *s1, char *s2){
+char* cat(const char *s1,const char *s2){
     if(s1 == NULL || s2 == NULL)
         return 0;
 
@@ -26,28 +26,38 @@ int min(int a1, int a2){
         return a2;
 }
 
-
-int fileRequest(RequestData *data)
-{
+int createBuffer(char **buffer, RequestData *data){
     FILE * file;
     if((file = fopen(data->path,"r")) == NULL) {
         printf("Failed to open file. path:");
         printf("%s",data->path);
         return 0;
     }
-    size_t patternLen = strlen(data->pattern);
-    size_t fileSize = 0;
 
+    size_t fileSize = 0;
     fseek(file, 0, SEEK_END);
     fileSize = ftello(file);
-    char buffer[fileSize * sizeof(char)];
+    *buffer = (char*)malloc(fileSize * sizeof(char));
     fseek(file, 0, 0);
-    if(fgets(buffer,fileSize,file) == NULL) {
+    if(fgets(*buffer,fileSize,file) == NULL) {
         fclose(file);
         return 0;
     }
     fclose(file);
+    return fileSize;
+}
 
+int fileRequest(RequestData *data)
+{
+    char *buffer = NULL;
+    createBuffer(&buffer,data);
+    int fileSize =  createBuffer(&buffer,data);
+    if(fileSize == 0){
+        free(buffer);
+        return 0;
+    }
+
+    size_t patternLen = strlen(data->pattern);
     int *levDist = (int*)calloc(sizeof(int),patternLen + 1);
     if(levDist == NULL)
         return 0;
@@ -80,6 +90,7 @@ int fileRequest(RequestData *data)
     }
     data->levDist = levDist[patternLen];
     free(levDist);
+    free(buffer);
     return 1;
 }
 int freeRequestData(RequestData *data){
