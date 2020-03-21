@@ -38,8 +38,11 @@ int createBuffer(char **buffer, RequestData *data){
     fseek(file, 0, SEEK_END);
     fileSize = ftello(file);
     *buffer = (char*)malloc(fileSize * sizeof(char));
+    if(*buffer == NULL)
+        return 0;
     fseek(file, 0, 0);
     if(fgets(*buffer,fileSize,file) == NULL) {
+        free(buffer);
         fclose(file);
         return 0;
     }
@@ -50,7 +53,6 @@ int createBuffer(char **buffer, RequestData *data){
 int fileRequest(RequestData *data)
 {
     char *buffer = NULL;
-    createBuffer(&buffer,data);
     int fileSize =  createBuffer(&buffer,data);
     if(fileSize == 0){
         free(buffer);
@@ -59,8 +61,11 @@ int fileRequest(RequestData *data)
 
     size_t patternLen = strlen(data->pattern);
     int *levDist = (int*)calloc(sizeof(int),patternLen + 1);
-    if(levDist == NULL)
+    if(levDist == NULL) {
+        free(levDist);
+        free(buffer);
         return 0;
+    }
     levDist[0] = 0;
     int insertCost = 1;
     int deleteCost = 1;
