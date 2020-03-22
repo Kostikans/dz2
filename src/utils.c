@@ -114,7 +114,11 @@ int initTop(Top *top){
 }
 
 int createTop(RequestData *data,int count,Top **top){
+    if(data == NULL)
+        return 0;
     *top = (Top*)malloc(TOP_SIZE * sizeof(Top));
+    if(*top == NULL)
+        return 0;
     for(int i = 0; i < TOP_SIZE; ++i){
         initTop(&(*top)[i]);
     }

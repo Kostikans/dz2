@@ -3,9 +3,10 @@
 #include "time.h"
 #include "dirent.h"
 #include <sys/stat.h>
+#define BUFF_SIZE 100
 
-void addFileName(char *path,int len, char *name){
-    memcpy((void*)(path + len), name, len + strlen(name) + 1);
+static void addFileName(char *path,int len, char *name){
+    memcpy((void*)(path + len), name,  strlen(name) + 1);
 }
 
 static void addTestString(const char *str,char *path, char* fileName, int len){
@@ -14,23 +15,19 @@ static void addTestString(const char *str,char *path, char* fileName, int len){
 
     fprintf(mf,"%s", str);
     fclose(mf);
-
 }
 
 static int createTestFiles(){
+
     char *path = NULL;
-    path = get_current_dir_name();
+    path = getcwd(path,BUFF_SIZE);
     char *testFolder = "/files";
+    size_t len = strlen(path);
+    size_t testLen = strlen(testFolder);
 
-    int len = (int)strlen(path);
-    char *tmp = NULL;
-    tmp = (char*)realloc(path,sizeof(char) * (len * 3));
-    if(tmp != NULL){
-        path = tmp;
-    }
-
-    mempcpy((void*)(path + strlen(path)),testFolder,strlen(path) + strlen(testFolder) + 1);
+    memcpy(path + len, testFolder, testLen + 1);
     len = (int)strlen(path);
+
     mkdir(path, (__mode_t) (S_IRWXU | S_IRWXG | S_IRWXO));
 
     const char* s1 = "kostyarwerwekekewrwejklfjklsdjklfjdsmvnkltwejklnvdmsjrkqejfsd,jekljds,mklwrjkldf,gjwrekljmfdm";
@@ -184,13 +181,11 @@ void test(char *path){
 }
 
 int main(){
+    char *path = NULL;
+    path = getcwd(path,BUFF_SIZE);
     createTestFiles();
-    char * path = get_current_dir_name();
     char *testFolder = "/files";
-
-    int len = (int)strlen(path);
-    path = (char*)realloc(path,sizeof(char) * (len * 3));
-    mempcpy((void*)(path + strlen(path)),testFolder,strlen(path) + strlen(testFolder) + 1);
+    memcpy((void*)(path + strlen(path)), testFolder, strlen(testFolder) + 1);
 
     test(path);
 
