@@ -3,7 +3,6 @@
 #include "time.h"
 #include "dirent.h"
 #include <sys/stat.h>
-#include <sys/resource.h>
 #define BUFF_SIZE 100
 
 static void addFileName(char *path,int len, char *name){
@@ -190,23 +189,19 @@ int main(){
 
     test(path);
 
-    struct rusage usage;
-    struct timeval start,end;
     Top *top1 = NULL;
-    getrusage(RUSAGE_SELF,&usage);
-    start = usage.ru_utime;
-    crawl("kokekrewrkwel",path,&top1);
-    getrusage(RUSAGE_SELF,&usage);
-    end = usage.ru_utime;
-    printf("%ld.%lds\n",end.tv_sec - start.tv_sec, end.tv_usec -start.tv_usec);
+    clock_t begin = clock();
+    crawl("kokekrewrkwel", path ,&top1);
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("%f\n",time_spent);
 
     Top *top2 = NULL;
-    getrusage(RUSAGE_SELF,&usage);
-    start = usage.ru_utime;
-    crawlPrl("kokekrewrkwel",path,&top2);
-    getrusage(RUSAGE_SELF,&usage);
-    end = usage.ru_utime;
-    printf("%ld.%lds\n",end.tv_sec - start.tv_sec, end.tv_usec -start.tv_usec);
+    begin = clock();
+    crawlPrl("kokekrewrkwel", path ,&top2);
+    end = clock();
+    time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("%f\n",time_spent);
 
     printf("\n");
     for(int i = 0; i < 5; ++i){
