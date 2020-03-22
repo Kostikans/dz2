@@ -22,7 +22,6 @@ typedef struct RequestData
 
 char* cat(const char *s1,const char *s2);
 int min(int a1, int a2);
-int freeRequestData(RequestData *data);
 int createTop(RequestData *data,int count,Top **top);
 int initTop(Top *top);
 int fileRequest(RequestData *data);

@@ -98,11 +98,6 @@ int fileRequest(RequestData *data)
     free(buffer);
     return 1;
 }
-int freeRequestData(RequestData *data){
-    free((char*)data->path);
-    free(data);
-    return 1;
-}
 
 int initTop(Top *top){
     top->levDistValue = INT_MAX;
