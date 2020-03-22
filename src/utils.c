@@ -38,8 +38,10 @@ int createBuffer(char **buffer, RequestData *data){
     fseek(file, 0, SEEK_END);
     fileSize = ftello(file);
     *buffer = (char*)malloc(fileSize * sizeof(char));
-    if(*buffer == NULL)
+    if(*buffer == NULL) {
+        fclose(file);
         return 0;
+    }
     fseek(file, 0, 0);
     if(fgets(*buffer,fileSize,file) == NULL) {
         free(buffer);
