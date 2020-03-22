@@ -64,7 +64,7 @@ static int createTestFiles(){
     return 1;
 }
 
-void test(char *path){
+static void test(char *path){
     Top *top1 = NULL;
     crawl("kokekrewrkwel",path,&top1);
     Top *top2 = NULL;
