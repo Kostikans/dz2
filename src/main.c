@@ -194,18 +194,18 @@ int main(){
     struct timeval start,end;
     Top *top1 = NULL;
     getrusage(RUSAGE_SELF,&usage);
-    start = usage.ru_stime;
+    start = usage.ru_utime;
     crawl("kokekrewrkwel",path,&top1);
     getrusage(RUSAGE_SELF,&usage);
-    end = usage.ru_stime;
+    end = usage.ru_utime;
     printf("%ld.%lds\n",end.tv_sec - start.tv_sec, end.tv_usec -start.tv_usec);
 
     Top *top2 = NULL;
     getrusage(RUSAGE_SELF,&usage);
-    start = usage.ru_stime;
+    start = usage.ru_utime;
     crawlPrl("kokekrewrkwel",path,&top2);
     getrusage(RUSAGE_SELF,&usage);
-    end = usage.ru_stime;
+    end = usage.ru_utime;
     printf("%ld.%lds\n",end.tv_sec - start.tv_sec, end.tv_usec -start.tv_usec);
 
     printf("\n");
