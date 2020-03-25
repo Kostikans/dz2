@@ -46,6 +46,7 @@ int crawl(const char* pattern,const char *path,Top **top) {
             free(filePath);
         }
     }
+    
     createTop(data,count,top);
     free(data);
     closedir(mydir);
