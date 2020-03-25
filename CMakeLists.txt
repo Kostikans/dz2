@@ -16,8 +16,6 @@ set(lib_static_srcs
 
 
 add_library( MyStaticLib STATIC ${lib_static_srcs} ${lib_static_hdrs} )
-find_package(Threads REQUIRED)
-target_link_libraries(MyStaticLib Threads::Threads)
 
 set(lib_shared_hdrs
         ${PROJECT_SOURCE_DIR}/include/utils.h
@@ -29,6 +27,7 @@ set(lib_shared_srcs
         )
 
 add_library( MySharedLib SHARED ${lib_shared_srcs} ${lib_shared_hdrs} )
+find_package(Threads REQUIRED)
 target_link_libraries(MySharedLib Threads::Threads)
 
 
