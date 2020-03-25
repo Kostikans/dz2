@@ -14,7 +14,7 @@ int crawl(const char* pattern,const char *path,Top **top) {
     if (data == NULL){
         closedir(mydir);
         return 0;
-    }
+    } 
     int count = 0;
     struct dirent *entry;
     entry = readdir(mydir);
@@ -46,7 +46,7 @@ int crawl(const char* pattern,const char *path,Top **top) {
             free(filePath);
         }
     }
-    
+
     createTop(data,count,top);
     free(data);
     closedir(mydir);
