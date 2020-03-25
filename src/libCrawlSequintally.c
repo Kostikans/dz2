@@ -1,17 +1,20 @@
 #include "../include/libCrawlSequintally.h"
 #include "dirent.h"
 
-int crawl(const char* pattern,const char *path,Top **top)
-{
-    if(pattern == NULL || path == NULL)
+int crawl(const char* pattern,const char *path,Top **top) {
+    if (pattern == NULL || path == NULL)
         return 0;
     DIR *mydir = opendir(path);
-    if(mydir == NULL) {
+    if (mydir == NULL) {
         closedir(mydir);
         return 0;
     }
     int requestDataCount = 1;
-    RequestData *data = (RequestData*)malloc(requestDataCount * sizeof(RequestData));
+    RequestData *data = (RequestData *) malloc(requestDataCount * sizeof(RequestData));
+    if (data == NULL){
+        closedir(mydir);
+        return 0;
+    }
     int count = 0;
     struct dirent *entry;
     entry = readdir(mydir);
