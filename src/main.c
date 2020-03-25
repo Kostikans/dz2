@@ -30,34 +30,34 @@ static int createTestFiles(){
 
     mkdir(path, (__mode_t) (S_IRWXU | S_IRWXG | S_IRWXO));
 
-    const char* s1 = "kostyarwerwekekewrwejklfjklsdjklfjdsmvnkltwejklnvdmsjrkqejfsd,jekljds,mklwrjkldf,gjwrekljmfdm";
+    const char* s1 = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. ";
     addTestString(s1,path,"/1.txt",len);
 
-    const char* s2 = "kostyrewmr34,2mlmrel";
+    const char* s2 = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She ";
     addTestString(s2,path,"/2.txt",len);
 
-    const char* s3 = "kostrekerdekw;le23ewekeerwe";
+    const char* s3 = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She never ";
     addTestString(s3,path,"/3.txt",len);
 
-    const char* s4 = "kosrmemwmkewrmwermw";
+    const char* s4 = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She never sent ";
     addTestString(s4,path,"/4.txt",len);
 
-    const char* s5 = "kokekrewrkwelewrternsdmnjk24h3jfnsmdjw4hfmsdkjth4wnfdsmntwhvmfds";
+    const char* s5 = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She never sent text ";
     addTestString(s5,path,"/5.txt",len);
 
-    const char* s6 = "rewrlewrewkewrwe;l";
+    const char* s6 = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She never sent text messages ";
     addTestString(s6,path,"/6.txt",len);
 
-    const char* s7 = "432ljefsfsdrklkl;ewkrwe";
+    const char* s7 = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She never sent text messages and ";
     addTestString(s7,path,"/7.txt",len);
 
-    const char* s8 = "trendf,nlktjtkjrelkfje";
+    const char* s8 = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She never sent text messages and she";
     addTestString(s8,path,"/8.txt",len);
 
-    const char* s9 = "dsncmxetreomngfdmngfffdsr43rirweffmdnmcxuweiorjvkcx";
+    const char* s9 = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She never sent text messages and she hated ";
     addTestString(s9,path,"/9.txt",len);
 
-    const char* s10 = "kokekrewrkwel";
+    const char* s10 = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She never sent text messages and she hated Facebook";
     addTestString(s10,path,"/10.txt",len);
 
     free(path);
@@ -65,10 +65,11 @@ static int createTestFiles(){
 }
 
 static void test(char *path){
+    const char* test = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She never sent ";
     Top *top1 = NULL;
-    crawl("kokekrewrkwel",path,&top1);
+    crawl(test,path,&top1);
     Top *top2 = NULL;
-    crawlPrl("kokekrewrkwel",path,&top2);
+    crawlPrl(test,path,&top2);
     if(top1[0].levDistValue == top2[0].levDistValue){
         printf("OK\n");
     }
@@ -79,9 +80,9 @@ static void test(char *path){
     free(top2);
 
     top1 = NULL;
-    crawl("kokekrewrkwel",path ,&top1);
+    crawl(test,path ,&top1);
     top2 = NULL;
-    crawlPrl("kokekrewrkwel",path,&top2);
+    crawlPrl(test,path,&top2);
     if(top1[1].levDistValue == top2[1].levDistValue){
         printf("OK\n");
     }
@@ -92,9 +93,9 @@ static void test(char *path){
     free(top2);
 
     top1 = NULL;
-    crawl("kokekrewrkwel",path,&top1);
+    crawl(test,path,&top1);
     top2 = NULL;
-    crawlPrl("kokekrewrkwel",path,&top2);
+    crawlPrl(test,path,&top2);
     if(top1[2].levDistValue == top2[2].levDistValue){
         printf("OK\n");
     }
@@ -105,9 +106,9 @@ static void test(char *path){
     free(top2);
 
     top1 = NULL;
-    crawl("kokekrewrkwel",path,&top1);
+    crawl(test,path,&top1);
     top2 = NULL;
-    crawlPrl("kokekrewrkwel",path,&top2);
+    crawlPrl(test,path,&top2);
     if(top1[3].levDistValue == top2[3].levDistValue){
         printf("OK\n");
     }
@@ -118,9 +119,9 @@ static void test(char *path){
     free(top2);
 
     top1 = NULL;
-    crawl("kokekrewrkwel",path,&top1);
+    crawl(test,path,&top1);
     top2 = NULL;
-    crawlPrl("kokekrewrkwel",path,&top2);
+    crawlPrl(test,path,&top2);
     if(top1[4].levDistValue == top2[4].levDistValue){
         printf("OK\n");
     }
@@ -131,7 +132,7 @@ static void test(char *path){
     free(top2);
 
     top1 = NULL;
-    crawl("kokekrewrkwel",path,&top1);
+    crawl(test,path,&top1);
     if(strcmp(top1[3].fileName,"2.txt") == 0){
         printf("OK\n");
     }
@@ -141,8 +142,8 @@ static void test(char *path){
     free(top1);
 
     top1 = NULL;
-    crawl("kokekrewrkwel",path,&top1);
-    if(strcmp(top1[0].fileName, "10.txt") == 0){
+    crawl(test,path,&top1);
+    if(strcmp(top1[3].fileName, "2.txt") == 0){
         printf("OK\n");
     }
     else{
@@ -151,8 +152,8 @@ static void test(char *path){
     free(top1);
 
     top2 = NULL;
-    crawlPrl("kokekrewrkwel",path,&top2);
-    if(strcmp(top2[2].fileName,"6.txt") == 0){
+    crawlPrl(test,path,&top2);
+    if(strcmp(top2[2].fileName,"3.txt") == 0){
         printf("OK\n");
     } else{
         printf("NO\n");
@@ -160,8 +161,8 @@ static void test(char *path){
     free(top2);
 
     top1 = NULL;
-    crawl("kokekrewrkwel",path,&top1);
-    if(strcmp(top1[1].fileName,"4.txt") == 0){
+    crawl(test,path,&top1);
+    if(strcmp(top1[1].fileName,"5.txt") == 0){
         printf("OK\n");
     }
     else{
@@ -170,8 +171,8 @@ static void test(char *path){
     free(top1);
 
     top2 = NULL;
-    crawlPrl("kokekrewrkwel",path,&top2);
-    if(strcmp(top2[4].fileName,"3.txt") == 0){
+    crawlPrl(test,path,&top2);
+    if(strcmp(top2[0].fileName,"4.txt") == 0){
         printf("OK\n");
     }
     else{
@@ -187,18 +188,18 @@ int main(){
     char *testFolder = "/files";
     memcpy((void*)(path + strlen(path)), testFolder, strlen(testFolder) + 1);
 
+    const char* testText = "Hi Amy! Your mum sent me a text. You forgot your inhaler. Why don’t you turn your phone on? Amy didn’t like technology. She never sent ";
     test(path);
-
     Top *top1 = NULL;
     clock_t begin = clock();
-    crawl("kokekrewrkwel", path ,&top1);
+    crawl(testText, path ,&top1);
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
     printf("%f\n",time_spent);
 
     Top *top2 = NULL;
     begin = clock();
-    crawlPrl("kokekrewrkwel", path ,&top2);
+    crawlPrl(testText, path ,&top2);
     end = clock();
     time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
     printf("%f\n",time_spent);

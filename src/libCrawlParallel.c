@@ -58,16 +58,16 @@ int growRequestData(RequestData **data,int *requestDataCount){
 int crawlPrl(const char* pattern,const char *path,Top **top){
     if(pattern == NULL || path == NULL)
         return 0;
-    int ThreadsCount = get_nprocs();
+
     DIR *mydir = opendir(path);
     if(mydir == NULL) {
         closedir(mydir);
         return 0;
     }
-    int count = 0;
 
-    pthread_t *pthread[ThreadsCount];
-    for(int i = 0; i < ThreadsCount; ++i)
+    int MaxThreadsCount = get_nprocs();
+    pthread_t *pthread[MaxThreadsCount];
+    for(int i = 0; i < MaxThreadsCount; ++i)
         pthread[i] = NULL;
 
     int requestDataCount = 1;
@@ -78,6 +78,7 @@ int crawlPrl(const char* pattern,const char *path,Top **top){
     }
 
     struct dirent *entry;
+    int count = 0;
     int ThreadCount = 0;
     entry = readdir(mydir);
     while(entry) {
@@ -110,7 +111,7 @@ int crawlPrl(const char* pattern,const char *path,Top **top){
                 return 0;
             }
             ++ThreadCount;
-            if(ThreadCount == ThreadsCount)
+            if(ThreadCount == MaxThreadsCount)
             {
                 int temp = count - ThreadCount + 1;
                 runThreads(pthread, data, temp, ThreadCount);
